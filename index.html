@@ -8,17 +8,33 @@
   </head>
 
   <body>
-    <h1 class="time">Time left</h1> 
+    <header>
+      <h1>JavaScript Quiz</h1>
+    </header>
+    <main>
+    <h2 class="time"></h1> 
+    <section>
+      <h2 id="rulesHeader">Test Rules</h2>
+      <ul id="rules">
+        <li>You will receive 2 minutes to complete this quiz</li>
+        <li>For all answers you get correct you receive 5 extra seconds. For every answer you get incorrect you lose 15 seconds.</li>
+        <li>There are 8 multiple choice questions and you get 1 chance to answer each question</li>
+      </ul>
+      <button id="start">Start</button>
+    </section>
     <section id="questions" class="questions">
       <p id="question"></p>
       <ul id="answerChoices"></ul>
+      
     </section>
     <section class="highScores">
       <form>
-        <input> Initials </input>
-        <button> Submit</button>
+        <input id = "initials" placeholder="initials"></input>
+        <button id = "submit"> Submit</button>
       </form>
+    <button id="replay">Replay</button>
     </section>
+  </main>
     <script src="assets/javascript/script.js"></script>
   </body>
 </html>

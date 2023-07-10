@@ -1,0 +1,23 @@
+.questions {
+    display: block;
+    padding: 10 px;
+    margin: auto;
+    text-align: center;
+}
+#answerChoices {
+    display: block;
+    margin: auto;
+    text-align: center;
+    list-style: inside;
+}
+button {
+    display: block;
+    margin: auto;
+    text-align: center;
+    width: 100%;
+    list-style: inside;
+}
+
+#replay {
+    width: 50%;
+}
