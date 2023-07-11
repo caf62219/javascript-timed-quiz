@@ -13,6 +13,7 @@
     </header>
     <main>
     <h2 class="time"></h1> 
+    
     <section>
       <h2 id="rulesHeader">Test Rules</h2>
       <ul id="rules">
@@ -28,11 +29,16 @@
       
     </section>
     <section class="highScores">
-      <form>
+      <h2 id="returnHighScores">High Scores</h2>
+        <ol id="userScores"></ol>
+        <button id="clear">Clear High Scores</button>
+      <form id="form">
         <input id = "initials" placeholder="initials"></input>
-        <button id = "submit"> Submit</button>
+        <button type ="button" id = "submit"> Submit</button>
       </form>
-    <button id="replay">Replay</button>
+      <div id="correct"></div>
+      <div id="incorrect"></div>
+      <button id="replay">Replay</button>
     </section>
   </main>
     <script src="assets/javascript/script.js"></script>

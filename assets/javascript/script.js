@@ -5,16 +5,32 @@ var startEl =document.getElementById("start");
 var rulesHeader = document.getElementById("rulesHeader");
 var rules = document.getElementById("rules");
 var initials = document.getElementById("initials");
-var submit = document.getElementById("submit")
-var replay = document.getElementById("replay")
+var submit = document.getElementById("submit");
+var replay = document.getElementById("replay");
+var correct = document.getElementById("correct");
+var incorrect = document.getElementById("incorrect");
+var form =document.getElementById("form");
+var returnHighScores = document.getElementById ("returnHighScores");
+var userScores =document.getElementById ("userScores");
+var highScores = document.querySelector(".highScores");
+var clear =document.getElementById("clear");
 
 // state variable
 var secondsLeft=120
 var currentQuestion = 0;
+var correctAnswers = 0;
+var incorrectAnswers = 0;
 
 replay.style.display = "none";
 initials.style.display = "none";
 submit.style.display = "none";
+highScores.style.display ="none";
+
+
+clear.addEventListener("click", function () 
+    {localStorage.clear();
+    userScores.innerHTML = ""}
+    )
 
 startEl.addEventListener("click", ()=> {
     startEl.style.display = "none";
@@ -71,19 +87,18 @@ var questions = [
     },
 ];
 
+  var timerInterval;
 
 function setTime () {
-    var timerInterval= setInterval(function(){
+   timerInterval= setInterval(function(){
         secondsLeft--;
         timeLeft.textContent =secondsLeft + " seconds left";
 //add in if the questions were incorrect take time off
     if (secondsLeft <=0) {
-        alert ("Out of Time!");
         clearInterval(timerInterval);
-        endQuiz()
-    }
-}, 1000)
-}
+        
+        endQuiz()    }
+}, 1000)}
 
 function displayQuestion(question, choices) {
    
@@ -105,6 +120,7 @@ function displayQuestion(question, choices) {
 function startQuiz() {
     displayQuestion(questions[currentQuestion].question, questions[currentQuestion].choices);
     setTime()
+    
 
 }
 //displayQuestion('Which is not a most common variable type?', [string, number,boolean, textNode])
@@ -116,12 +132,14 @@ function answerQuestion(event) {
     if(userChoice === questions[currentQuestion].answer) {
         console.log('correct!')
         secondsLeft+=5 
+        correctAnswers++
         document.getElementById('question').innerHTML = "";
     document.getElementById('answerChoices').innerHTML = "";
     } else {
         console.log('incorrect!')
         // decrease time
         secondsLeft-=15
+        incorrectAnswers ++
         document.getElementById('question').innerHTML = "";
     document.getElementById('answerChoices').innerHTML = "";
     }
@@ -129,32 +147,78 @@ function answerQuestion(event) {
     // increment currentQuestion
     currentQuestion++
     // call displayQuestion again
-    displayQuestion(questions[currentQuestion].question, questions[currentQuestion].choices);
-     
-    
-    //this does not work
-    if (currentQuestion === undefined || secondsLeft <= 0){
+
+    if (currentQuestion>=questions.length || secondsLeft <= 0) {
+        clearInterval(timerInterval);
+        timeLeft.textContent =secondsLeft + " seconds left";
         endQuiz();
         window.alert("Quiz Over! Please put your Initials in the box");
+    }else{
+   
+    displayQuestion(questions[currentQuestion].question, questions[currentQuestion].choices);
     }
+    
+    
+    
 
 }
 function endQuiz() {
     //need to add if out of questions or timer <=0 then alert quiz is over
+    var initials = document.getElementById("initials");
     document.getElementById('question').innerHTML = "";
-    document.getElementById('answerChoices').innerHTML = ""
-    if (currentQuestion === undefined || secondsLeft <= 0) {
-        window.alert("Quiz Over! Please put your Initials in the box");
-        clearInterval(setTime);
-    }
-    // stop the timer if out of questions
-    //need to save the time that ended (secondsLeft)
+    document.getElementById('answerChoices').innerHTML = "";
+    
     //need to add replay button-this doesnt work needs to clear the current
 
-    replayEL.addEventListener("click", startQuiz)
+    replayEL.addEventListener("click", function(){
+        currentQuestion=0;
+        secondsLeft= 120;
+        initials.style.display = "none";
+        submit.style.display = "none";
+        replay.style.display = "none";
+        correct.style.display = "none";
+        incorrect.style.display ="none";
+        highScores.style.display ="none";
+        startQuiz()
+    });
+
+    getHighScores()
     //need to add saving system of high scores (initials plus secondsLeft)
     initials.style.display = "block";
     submit.style.display = "block";
     replay.style.display = "block";
+    highScores.style.display ="block";
+    submit.addEventListener("click", highScore);
+    correct.textContent="Correct Answers: " + correctAnswers;
+    incorrect.textContent="Incorrect Answers: " + incorrectAnswers;
 }
 
+function highScore() {
+    // if localstorage exists, scores will equal existing data, otherwise it's an empty array
+    var scores = JSON.parse(localStorage.getItem("userScore")) || [];
+
+    var initials = document.getElementById("initials");
+    var userScore = {
+        user: initials.value,
+        score: secondsLeft,
+        correct: correctAnswers, 
+        incorrect: incorrectAnswers
+    }
+    scores.push(userScore)
+    localStorage.setItem("userScore", JSON.stringify(scores));
+}
+
+function getHighScores(){
+    var scores = JSON.parse(localStorage.getItem("userScore")) || [];
+    console.log(scores);
+    for(var i = 0; i < scores.length; i++) {
+        console.log(scores[i].user)
+        // create li elements
+        // add text to li elements
+        // append li elements to ol
+        const li = document.createElement("li");
+        document.getElementById("userScores").appendChild(li)
+        li.textContent = "userID: "+ scores[i].user + " Score: " + scores[i].score;
+        
+    }
+}
