@@ -3,17 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--link to css style sheet-->
     <link rel="stylesheet" href="assets/css/style.css">
     <title>Javascript Timed Quiz</title>
   </head>
 
   <body>
+<!--Header class that states the title of the page--> 
     <header>
       <h1>JavaScript Quiz</h1>
     </header>
     <main>
+<!--Where the time is displayed on the page-->
     <h2 class="time"></h1> 
-    
+<!--Section for game rules-->
     <section class="gameRules">
       <h2 id="rulesHeader">Test Rules</h2>
       <ul id="rules">
@@ -21,13 +24,15 @@
         <li>For all answers you get correct you receive 5 extra seconds. For every answer you get incorrect you lose 15 seconds.</li>
         <li>There are 8 multiple choice questions and you get 1 chance to answer each question</li>
       </ul>
+<!--Where the start button is-->
       <button id="start">Start</button>
     </section>
+<!--Where the javascript pulls in the questions and answer choices-->
     <section id="questions" class="questions">
       <p id="question"></p>
       <ul id="answerChoices"></ul>
-      
     </section>
+<!--Where the high scores are displayed and added to as well as the replay button-->
     <section class="highScores">
       <h2 id="returnHighScores">High Scores</h2>
         <ol id="userScores"></ol>
@@ -41,6 +46,7 @@
       <button id="replay">Replay</button>
     </section>
   </main>
+<!--Where the Javascript is linked-->
     <script src="assets/javascript/script.js"></script>
   </body>
 </html>

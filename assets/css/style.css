@@ -13,6 +13,7 @@ h2 {
     font-size: 30px;
 }
 
+/*stylizes the header*/
 header {
     margin: auto;
     text-align: center;
@@ -49,6 +50,8 @@ button {
     list-style: inside;
     padding: 5px;
 }
+
+/*puts space around the clear button*/
 #clear  {
     margin: 20px;
 }
@@ -70,4 +73,4 @@ button {
       
   }
   
-  }
+  
