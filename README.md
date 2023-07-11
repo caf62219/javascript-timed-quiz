@@ -9,7 +9,7 @@
     
 # Installation
 
-    Follow the following URL to the website: 
+    Follow the following URL to the website: https://caf62219.github.io/javascript-timed-quiz/
     
 # Usage
 <img src="./assets/images/Screenshot.png" alt="screenshot of JavaScript Quiz rules page" width="600px" />
