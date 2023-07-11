@@ -21,17 +21,19 @@ var currentQuestion = 0;
 var correctAnswers = 0;
 var incorrectAnswers = 0;
 
+//styling for buttons so they do not display initially
 replay.style.display = "none";
 initials.style.display = "none";
 submit.style.display = "none";
 highScores.style.display ="none";
 
-
+//functionality of the clear button
 clear.addEventListener("click", function () 
     {localStorage.clear();
     userScores.innerHTML = ""}
     )
 
+    //functionality of the start button
 startEl.addEventListener("click", ()=> {
     startEl.style.display = "none";
     rulesHeader.style.display = "none";
@@ -41,7 +43,7 @@ startEl.addEventListener("click", ()=> {
     startQuiz ()
 });
 
-
+//questions, choices and answers for the quiz
 var questions = [
     {
         question: "What does boolean include?",
@@ -89,20 +91,21 @@ var questions = [
 
   var timerInterval;
 
-function setTime () {
+//timer function
+  function setTime () {
    timerInterval= setInterval(function(){
         secondsLeft--;
         timeLeft.textContent =secondsLeft + " seconds left";
-//add in if the questions were incorrect take time off
+//signals end of quiz if the time runs out
     if (secondsLeft <=0) {
         clearInterval(timerInterval);
         
         endQuiz()    }
 }, 1000)}
 
+//function to display the questions and cycle through the questions
 function displayQuestion(question, choices) {
-   
-    
+       
     const questionText = document.createTextNode(question)
     
     document.getElementById('question').appendChild(questionText)
@@ -113,63 +116,58 @@ function displayQuestion(question, choices) {
         li.appendChild(textNode);
         li.addEventListener("click", answerQuestion);
         document.getElementById("answerChoices").appendChild(li)
-       
     }
 }
 
+//start quiz function that displays the question and starts the timer
 function startQuiz() {
     displayQuestion(questions[currentQuestion].question, questions[currentQuestion].choices);
     setTime()
-    
-
 }
-//displayQuestion('Which is not a most common variable type?', [string, number,boolean, textNode])
 
+//function to handle answering the question
 function answerQuestion(event) {
     //if answer ===true
     var userChoice = event.target.innerText
     console.log(event)
+//what to do if the answer is correct
     if(userChoice === questions[currentQuestion].answer) {
         console.log('correct!')
         secondsLeft+=5 
         correctAnswers++
         document.getElementById('question').innerHTML = "";
-    document.getElementById('answerChoices').innerHTML = "";
+        document.getElementById('answerChoices').innerHTML = "";
+//what to do if the answer if false
     } else {
         console.log('incorrect!')
         // decrease time
         secondsLeft-=15
         incorrectAnswers ++
         document.getElementById('question').innerHTML = "";
-    document.getElementById('answerChoices').innerHTML = "";
+         document.getElementById('answerChoices').innerHTML = "";
     }
   
     // increment currentQuestion
     currentQuestion++
-    // call displayQuestion again
-
+    
+    // call displayQuestion again provided the questions are not done and the time has not run out
     if (currentQuestion>=questions.length || secondsLeft <= 0) {
         clearInterval(timerInterval);
         timeLeft.textContent =secondsLeft + " seconds left";
         endQuiz();
         window.alert("Quiz Over! Please put your Initials in the box");
     }else{
-   
-    displayQuestion(questions[currentQuestion].question, questions[currentQuestion].choices);
+       displayQuestion(questions[currentQuestion].question, questions[currentQuestion].choices);
     }
-    
-    
-    
-
 }
+
+//end quiz function
 function endQuiz() {
-    //need to add if out of questions or timer <=0 then alert quiz is over
     var initials = document.getElementById("initials");
     document.getElementById('question').innerHTML = "";
     document.getElementById('answerChoices').innerHTML = "";
-    
-    //need to add replay button-this doesnt work needs to clear the current
 
+//what happens when you hit the replay button
     replayEL.addEventListener("click", function(){
         currentQuestion=0;
         secondsLeft= 120;
@@ -183,16 +181,20 @@ function endQuiz() {
     });
 
     getHighScores()
-    //need to add saving system of high scores (initials plus secondsLeft)
+
+//styling adding in the initials, submit, replay and high scores
     initials.style.display = "block";
     submit.style.display = "block";
     replay.style.display = "block";
     highScores.style.display ="block";
+    correct.style.display = "block";
+    incorrect.style.display ="block";
     submit.addEventListener("click", highScore);
     correct.textContent="Correct Answers: " + correctAnswers;
     incorrect.textContent="Incorrect Answers: " + incorrectAnswers;
 }
 
+//saving your high scores and displaying the high scores
 function highScore() {
     // if localstorage exists, scores will equal existing data, otherwise it's an empty array
     var scores = JSON.parse(localStorage.getItem("userScore")) || [];
@@ -208,6 +210,7 @@ function highScore() {
     localStorage.setItem("userScore", JSON.stringify(scores));
 }
 
+//pulling in the high scores
 function getHighScores(){
     var scores = JSON.parse(localStorage.getItem("userScore")) || [];
     console.log(scores);
@@ -219,6 +222,5 @@ function getHighScores(){
         const li = document.createElement("li");
         document.getElementById("userScores").appendChild(li)
         li.textContent = "userID: "+ scores[i].user + " Score: " + scores[i].score;
-        
     }
 }

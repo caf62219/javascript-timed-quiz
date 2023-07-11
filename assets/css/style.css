@@ -1,23 +1,55 @@
+* {
+    background-color: darkgrey;
+    font-size: 20px;
+}
+
+h1 {
+    font-size: 45px;
+}
+h2 {
+    font-size: 30px;
+}
+
+header {
+    margin: auto;
+    text-align: center;
+    color: navy;
+    padding: 20px;
+    
+}
+button {
+    display: block;
+    margin: auto;
+    text-align: center;
+    width:fit-content;
+    
+}
+.gameRules {
+    color:black;
+
+}
 .questions {
     display: block;
     padding: 10 px;
     margin: auto;
     text-align: center;
 }
+
 #answerChoices {
     display: block;
     margin: auto;
     text-align: center;
     list-style: inside;
+    padding: 5px;
 }
-button {
-    display: block;
+#clear  {
+    margin: 20px;
+}
+#initials {
     margin: auto;
-    text-align: center;
-    width: 100%;
-    list-style: inside;
+   
+    
 }
-
 #replay {
     width: 50%;
 }
