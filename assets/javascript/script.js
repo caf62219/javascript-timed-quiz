@@ -213,6 +213,9 @@ function highScore() {
 //pulling in the high scores
 function getHighScores(){
     var scores = JSON.parse(localStorage.getItem("userScore")) || [];
+    scores.sort(function(a,b){
+        return b.score-a.score;
+    })
     console.log(scores);
     for(var i = 0; i < scores.length; i++) {
         console.log(scores[i].user)
